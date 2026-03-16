@@ -9,7 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.5.21"
+    "@codemirror/lang-python": "^6.2.1",
+    "@codemirror/view": "^6.40.0",
+    "axios": "^1.13.6",
+    "vue": "^3.5.21",
+    "vue-router": "^5.0.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
