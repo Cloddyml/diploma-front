@@ -6,12 +6,17 @@
             {{ loading ? "Думаю..." : "Спросить" }}
         </button>
         <div v-if="error" class="result error">{{ error }}</div>
-        <div v-if="hint" class="ai-response">{{ hint }}</div>
+        <div
+            v-if="hint"
+            class="ai-response markdown-body"
+            v-html="renderedHint"
+        />
     </div>
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
+import { marked } from "marked";
 import { getTaskHint, getTopicHint } from "../api/ai";
 
 const props = defineProps({
@@ -28,6 +33,10 @@ const placeholder = computed(() =>
     props.topicId
         ? "Напишите свой вопрос по теме..."
         : "Напишите свой вопрос по задаче...",
+);
+
+const renderedHint = computed(() =>
+    hint.value ? marked.parse(hint.value) : "",
 );
 
 async function loadHint() {

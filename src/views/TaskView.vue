@@ -7,7 +7,10 @@
         <div v-else-if="error" class="status error">Ошибка: {{ error }}</div>
         <div v-else>
             <h1>{{ task.title }}</h1>
-            <div class="task-description">{{ task.description }}</div>
+            <div
+                class="task-description markdown-body"
+                v-html="renderedDescription"
+            />
             <h2>Решение</h2>
             <CodeEditor v-model="code" @reset="code = starterCode" />
             <button @click="submitSolution" :disabled="submitting">
@@ -20,8 +23,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { marked } from "marked";
 import { getPublishedTask } from "../api/tasks";
 import { submitCode, pollSubmission } from "../api/submissions";
 import CodeEditor from "../components/CodeEditor.vue";
@@ -39,6 +43,10 @@ const loading = ref(true);
 const error = ref(null);
 const submitting = ref(false);
 const submission = ref(null);
+
+const renderedDescription = computed(() =>
+    task.value?.description ? marked.parse(task.value.description) : "",
+);
 
 onMounted(async () => {
     try {
