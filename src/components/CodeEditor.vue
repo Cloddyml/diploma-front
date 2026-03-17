@@ -95,7 +95,7 @@ const editorTheme = EditorView.theme(
         },
         ".cm-activeLineGutter": {
             background: "rgba(99,102,241,0.1)",
-            color: "var(--accent-hover)",
+            color: "#818cf8",
         },
         ".cm-cursor": {
             borderLeftColor: "var(--accent)",
