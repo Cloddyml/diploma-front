@@ -6,7 +6,6 @@
     --text: #e2e4ed;
     --text-muted: #6b7280;
     --accent: #6366f1;
-    --accent-hover: #818cf8;
     --success: #22c55e;
     --error: #ef4444;
     --warning: #f59e0b;
@@ -15,9 +14,7 @@
 }
 
 /* Сброс и база */
-*,
-*::before,
-*::after {
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -26,7 +23,7 @@
 body {
     background: var(--bg);
     color: var(--text);
-    font-family: var(--font);
+    font-family: Arial, sans-serif;
     font-size: 15px;
     line-height: 1.6;
     min-height: 100vh;
@@ -56,10 +53,9 @@ h2 {
 a {
     color: var(--accent);
     text-decoration: none;
-    transition: color 0.15s;
 }
 a:hover {
-    color: var(--accent-hover);
+    color: #818cf8;
 }
 
 /* Кнопки */
@@ -69,15 +65,12 @@ button {
     border: none;
     border-radius: var(--radius);
     padding: 10px 20px;
-    font-family: var(--font);
+    font-family: Arial, sans-serif;
     font-size: 14px;
     cursor: pointer;
-    transition:
-        background 0.15s,
-        opacity 0.15s;
 }
 button:hover {
-    background: var(--accent-hover);
+    background: #818cf8;
 }
 button:disabled {
     opacity: 0.4;
@@ -99,9 +92,6 @@ ul li a {
     border-radius: var(--radius);
     padding: 14px 18px;
     color: var(--text);
-    transition:
-        border-color 0.15s,
-        background 0.15s;
 }
 ul li a:hover {
     border-color: var(--accent);
@@ -130,6 +120,11 @@ ul li a:hover {
     white-space: pre-wrap;
 }
 
+/* Кнопка перехода к задачам */
+.btn-tasks {
+    margin-top: 24px;
+}
+
 /* Редактор кода */
 textarea {
     width: 100%;
@@ -142,7 +137,6 @@ textarea {
     padding: 16px;
     resize: vertical;
     outline: none;
-    transition: border-color 0.15s;
     margin-bottom: 12px;
 }
 textarea:focus {
@@ -195,6 +189,7 @@ pre {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 16px;
+    font-family: var(--font);
     font-size: 14px;
     line-height: 1.7;
     white-space: pre-wrap;
@@ -208,12 +203,13 @@ pre {
 .status.error {
     color: var(--error);
 }
+
 /* Markdown */
 .markdown-body h1,
 .markdown-body h2,
 .markdown-body h3 {
     color: var(--text);
-    margin: 20px 0 10px;
+    margin: 16px 0 8px;
     font-weight: 600;
 }
 .markdown-body h1 {
@@ -221,20 +217,20 @@ pre {
 }
 .markdown-body h2 {
     font-size: 17px;
-    color: var(--text);
 }
 .markdown-body h3 {
     font-size: 15px;
 }
 
 .markdown-body p {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 .markdown-body code {
     background: #2a2d3a;
     border-radius: 4px;
     padding: 2px 6px;
     font-size: 13px;
+    font-family: var(--font);
 }
 .markdown-body pre {
     background: #2a2d3a;
@@ -251,12 +247,8 @@ pre {
 .markdown-body ol {
     padding-left: 20px;
     margin-bottom: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
 }
-.markdown-body ul li,
-.markdown-body ol li {
+.markdown-body ul li {
     list-style: disc;
 }
 .markdown-body ol li {

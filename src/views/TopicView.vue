@@ -18,7 +18,7 @@
                 Теория для этой темы пока не добавлена.
             </div>
             <RouterLink :to="`/topics/${topic.slug}/tasks`">
-                <button style="margin-top: 24px">Перейти к задачам →</button>
+                <button class="btn-tasks">Перейти к задачам →</button>
             </RouterLink>
             <AiHint :topicId="topic.id" />
         </div>

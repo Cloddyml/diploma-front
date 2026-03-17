@@ -22,7 +22,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { getPublishedTasks } from "../api/tasks";
+import { getPublishedTask } from "../api/tasks";
 import { submitCode, pollSubmission } from "../api/submissions";
 import CodeEditor from "../components/CodeEditor.vue";
 import SubmissionResult from "../components/SubmissionResult.vue";
@@ -42,12 +42,9 @@ const submission = ref(null);
 
 onMounted(async () => {
     try {
-        const tasks = await getPublishedTasks(slug);
-        task.value = tasks.find((t) => t.id === taskId);
-        if (task.value) {
-            starterCode.value = task.value.starter_code || "";
-            code.value = starterCode.value;
-        }
+        task.value = await getPublishedTask(slug, taskId);
+        starterCode.value = task.value.starter_code || "";
+        code.value = starterCode.value;
     } catch (e) {
         error.value = e.message;
     } finally {
