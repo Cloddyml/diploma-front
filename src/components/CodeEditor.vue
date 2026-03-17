@@ -59,7 +59,7 @@ const container = ref(null);
 const focused = ref(false);
 let view = null;
 
-// ── Тема редактора ────────────────────────────────────────────
+// -- Тема редактора -------------------------------
 const editorTheme = EditorView.theme(
     {
         "&": {
@@ -116,7 +116,7 @@ const editorTheme = EditorView.theme(
     { dark: true },
 );
 
-// ── Подсветка синтаксиса Python ───────────────────────────────
+// -- Подсветка синтаксиса Python -------------------------------
 const pythonHighlight = HighlightStyle.define([
     // Ключевые слова: if, for, def, class, return, import...
     { tag: tags.keyword, color: "#c792ea" },
@@ -147,7 +147,7 @@ const pythonHighlight = HighlightStyle.define([
     { tag: tags.self, color: "#ff5370", fontStyle: "italic" },
 ]);
 
-// ── Базовые горячие клавиши (Tab, Shift+Tab) ──────────────────
+// -- Базовые горячие клавиши (Tab, Shift+Tab) -------------------------------
 const tabKeymap = keymap.of([
     {
         key: "Tab",
@@ -183,7 +183,7 @@ const tabKeymap = keymap.of([
     },
 ]);
 
-// ── Авто-отступ при Enter ─────────────────────────────────────
+// -- Авто-отступ при Enter -------------------------------
 const autoIndent = EditorView.domEventHandlers({
     keydown(e, view) {
         if (e.key !== "Enter") return false;
@@ -202,7 +202,7 @@ const autoIndent = EditorView.domEventHandlers({
     },
 });
 
-// ── Слушатель фокуса ──────────────────────────────────────────
+// -- Слушатель фокуса -------------------------------
 const focusExt = [
     EditorView.domEventHandlers({
         focus() {

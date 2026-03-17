@@ -56,7 +56,6 @@ async function submitSolution() {
     submitting.value = true;
     submission.value = { status: "pending" };
     try {
-        // Бек возвращает { submission_id }, не { id }
         const created = await submitCode(slug, taskId, code.value);
         pollSubmission(created.submission_id, (result) => {
             submission.value = result;
