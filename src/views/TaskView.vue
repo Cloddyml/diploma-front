@@ -1,6 +1,8 @@
 <template>
     <div class="container">
-        <RouterLink :to="`/topics/${slug}`" class="back">← Назад</RouterLink>
+        <RouterLink :to="`/topics/${slug}/tasks`" class="back"
+            >← Назад</RouterLink
+        >
         <div v-if="loading" class="status">Загрузка...</div>
         <div v-else-if="error" class="status error">Ошибка: {{ error }}</div>
         <div v-else>

@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import TopicView from "../views/TopicView.vue";
+import TasksView from "../views/TasksView.vue";
 import TaskView from "../views/TaskView.vue";
 
 const routes = [
     { path: "/", component: HomeView },
     { path: "/topics/:slug", component: TopicView },
-    { path: "/topics/:slug/:id", component: TaskView },
+    { path: "/topics/:slug/tasks", component: TasksView },
+    { path: "/topics/:slug/tasks/:id", component: TaskView },
 ];
 
 const router = createRouter({
