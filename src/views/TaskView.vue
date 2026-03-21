@@ -6,18 +6,38 @@
         <div v-if="loading" class="status">Загрузка...</div>
         <div v-else-if="error" class="status error">Ошибка: {{ error }}</div>
         <div v-else>
+            <!-- AI-бар вверху -->
+            <AiHint :taskId="task.id" />
+
             <h1>{{ task.title }}</h1>
+
+            <!-- Чекбокс завершения задания -->
+            <label class="completion-row" :class="{ done: task.is_completed }">
+                <input
+                    type="checkbox"
+                    :checked="task.is_completed"
+                    @change="toggleCompletion"
+                />
+                <span class="completion-label">
+                    {{
+                        task.is_completed
+                            ? "Задание выполнено ✓"
+                            : "Отметить как выполненное"
+                    }}
+                </span>
+            </label>
+
             <div
                 class="task-description markdown-body"
                 v-html="renderedDescription"
             />
+
             <h2>Решение</h2>
             <CodeEditor v-model="code" @reset="code = starterCode" />
             <button @click="submitSolution" :disabled="submitting">
                 {{ submitting ? "Отправляю..." : "Отправить" }}
             </button>
             <SubmissionResult :submission="submission" />
-            <AiHint :taskId="task.id" />
         </div>
     </div>
 </template>
@@ -26,7 +46,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { marked } from "marked";
-import { getPublishedTask } from "../api/tasks";
+import { getPublishedTask, markTaskProgress } from "../api/tasks";
 import { submitCode, pollSubmission } from "../api/submissions";
 import CodeEditor from "../components/CodeEditor.vue";
 import SubmissionResult from "../components/SubmissionResult.vue";
@@ -59,6 +79,16 @@ onMounted(async () => {
         loading.value = false;
     }
 });
+
+async function toggleCompletion() {
+    const newVal = !task.value.is_completed;
+    task.value.is_completed = newVal;
+    try {
+        await markTaskProgress(slug, taskId, newVal);
+    } catch {
+        task.value.is_completed = !newVal;
+    }
+}
 
 async function submitSolution() {
     submitting.value = true;

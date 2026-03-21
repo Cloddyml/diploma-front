@@ -1,0 +1,35 @@
+/* ── Лейаут ─────────────────────────────────────────────── */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+/* Назад-ссылка */
+.back {
+    display: inline-block;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+.back:hover {
+    color: var(--accent);
+}
+
+/* Описание задачи / теории */
+.task-description {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+/* Статус загрузки / ошибки */
+.status {
+    color: var(--text-muted);
+    padding: 40px 0;
+}
+.status.error {
+    color: var(--error);
+}

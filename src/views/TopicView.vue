@@ -4,7 +4,27 @@
         <div v-if="loading" class="status">Загрузка...</div>
         <div v-else-if="error" class="status error">Ошибка: {{ error }}</div>
         <div v-else>
+            <!-- AI-бар вверху -->
+            <AiHint :topicId="topic.id" />
+
             <h1>{{ topic.title }}</h1>
+
+            <!-- Чекбокс завершения темы -->
+            <label class="completion-row" :class="{ done: topic.is_completed }">
+                <input
+                    type="checkbox"
+                    :checked="topic.is_completed"
+                    @change="toggleCompletion"
+                />
+                <span class="completion-label">
+                    {{
+                        topic.is_completed
+                            ? "Тема изучена ✓"
+                            : "Отметить как изученную"
+                    }}
+                </span>
+            </label>
+
             <div
                 v-if="topic.content"
                 class="task-description markdown-body"
@@ -17,10 +37,10 @@
             >
                 Теория для этой темы пока не добавлена.
             </div>
+
             <RouterLink :to="`/topics/${topic.slug}/tasks`">
                 <button class="btn-tasks">Перейти к задачам →</button>
             </RouterLink>
-            <AiHint :topicId="topic.id" />
         </div>
     </div>
 </template>
@@ -29,7 +49,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { marked } from "marked";
-import { getPublishedTopic } from "../api/topics";
+import { getPublishedTopic, markTopicProgress } from "../api/topics";
 import AiHint from "../components/AiHint.vue";
 
 const route = useRoute();
@@ -52,4 +72,14 @@ onMounted(async () => {
         loading.value = false;
     }
 });
+
+async function toggleCompletion() {
+    const newVal = !topic.value.is_completed;
+    topic.value.is_completed = newVal;
+    try {
+        await markTopicProgress(slug, newVal);
+    } catch {
+        topic.value.is_completed = !newVal;
+    }
+}
 </script>

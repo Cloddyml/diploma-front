@@ -1,0 +1,52 @@
+/* ── Кнопки ─────────────────────────────────────────────── */
+button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 10px 20px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+}
+button:hover {
+    background: var(--accent-hover);
+}
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Переход к задачам */
+.btn-tasks {
+    margin-top: 24px;
+}
+
+/* Кнопка AI — контурная */
+.btn-ai {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 6px 16px;
+    font-size: 13px;
+    border-radius: var(--radius);
+}
+.btn-ai:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* Кнопка закрыть модалку */
+.btn-close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 22px;
+    padding: 2px 8px;
+    line-height: 1;
+    border-radius: 4px;
+}
+.btn-close:hover {
+    color: var(--text);
+    background: var(--border);
+}

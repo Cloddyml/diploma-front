@@ -1,0 +1,76 @@
+/* ── Списки ─────────────────────────────────────────────── */
+ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Элемент списка с чекбоксом */
+.list-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+}
+.list-item:hover {
+    border-color: var(--accent);
+    background: #1e2132;
+}
+.list-item.completed {
+    opacity: 0.55;
+}
+.list-item.completed .list-item-title {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+.list-item-title {
+    flex: 1;
+    color: var(--text);
+    font-size: 15px;
+}
+
+/* Чекбокс в списке */
+.item-checkbox {
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+}
+
+/* Чекбокс завершения внутри страницы топика/задания */
+.completion-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    width: fit-content;
+}
+.completion-row:hover {
+    border-color: var(--accent);
+}
+.completion-row.done {
+    border-color: var(--success);
+    color: var(--success);
+}
+.completion-row input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+    accent-color: var(--success);
+    flex-shrink: 0;
+}
+.completion-label {
+    font-size: 14px;
+    user-select: none;
+}

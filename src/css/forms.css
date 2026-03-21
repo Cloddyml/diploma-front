@@ -1,0 +1,17 @@
+/* ── Формы ──────────────────────────────────────────────── */
+textarea {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    padding: 16px;
+    resize: vertical;
+    outline: none;
+    margin-bottom: 12px;
+}
+textarea:focus {
+    border-color: var(--accent);
+}

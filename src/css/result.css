@@ -1,0 +1,33 @@
+/* ── Результат сабмита ──────────────────────────────────── */
+.result {
+    margin-top: 16px;
+    padding: 14px 18px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    font-size: 14px;
+}
+.result.pending {
+    color: var(--text-muted);
+}
+.result.accepted {
+    border-color: var(--success);
+    color: var(--success);
+}
+.result.error {
+    border-color: var(--error);
+    color: var(--error);
+}
+.result.warning {
+    border-color: var(--warning);
+    color: var(--warning);
+}
+
+pre {
+    margin-top: 10px;
+    background: var(--bg);
+    padding: 12px;
+    border-radius: var(--radius);
+    font-size: 12px;
+    overflow-x: auto;
+    color: var(--error);
+}

@@ -11,3 +11,9 @@ export async function getPublishedTask(topicSlug, taskId) {
     );
     return res.data;
 }
+
+export async function markTaskProgress(topicSlug, taskId, isCompleted) {
+    await axios.patch(`/api/v1/topics/${topicSlug}/tasks/${taskId}/progress`, {
+        is_completed: isCompleted,
+    });
+}
