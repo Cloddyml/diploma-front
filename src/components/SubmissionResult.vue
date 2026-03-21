@@ -24,7 +24,9 @@
         <span v-else-if="submission.status === 'internal_error'"
             >Внутренняя ошибка сервера</span
         >
-        <pre v-if="submission.error">{{ submission.error }}</pre>
+        <pre v-if="submission.result && submission.status === 'wrong_answer'">
+            {{ formatResult(submission.result) }}
+        </pre>
     </div>
 </template>
 

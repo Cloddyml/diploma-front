@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { useRoute } from "vue-router";
 import { marked } from "marked";
 import { getPublishedTask, markTaskProgress } from "../api/tasks";
@@ -67,6 +67,12 @@ const submission = ref(null);
 const renderedDescription = computed(() =>
     task.value?.description ? marked.parse(task.value.description) : "",
 );
+
+let pollInterval = null;
+
+onBeforeUnmount(() => {
+    if (pollInterval) clearInterval(pollInterval);
+});
 
 onMounted(async () => {
     try {
@@ -95,9 +101,10 @@ async function submitSolution() {
     submission.value = { status: "pending" };
     try {
         const created = await submitCode(slug, taskId, code.value);
-        pollSubmission(created.submission_id, (result) => {
+        pollInterval = pollSubmission(created.submission_id, (result) => {
             submission.value = result;
             submitting.value = false;
+            pollInterval = null;
         });
     } catch (e) {
         error.value = e.message;
