@@ -5,7 +5,7 @@ import TasksView from "../views/TasksView.vue";
 import TaskView from "../views/TaskView.vue";
 
 const routes = [
-    { path: "/", component: HomeView },
+    { path: "/", component: HomeView, meta: { title: "Темы" } },
     { path: "/topics/:slug", component: TopicView },
     { path: "/topics/:slug/tasks", component: TasksView },
     { path: "/topics/:slug/tasks/:id", component: TaskView },
@@ -14,6 +14,10 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
+});
+
+router.afterEach((to) => {
+    document.title = to.meta.title ?? "Учебная платформа";
 });
 
 export default router;

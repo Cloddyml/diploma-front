@@ -76,6 +76,7 @@ const progressPercent = computed(() =>
 onMounted(async () => {
     try {
         tasks.value = await getPublishedTasks(slug);
+        document.title = `${slug} — Задачи`;
     } catch (e) {
         error.value = e.message;
     } finally {

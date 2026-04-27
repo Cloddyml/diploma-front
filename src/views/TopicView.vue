@@ -66,6 +66,7 @@ const renderedContent = computed(() =>
 onMounted(async () => {
     try {
         topic.value = await getPublishedTopic(slug);
+        document.title = topic.value.title;
     } catch (e) {
         error.value = e.message;
     } finally {

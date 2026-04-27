@@ -76,9 +76,11 @@ onBeforeUnmount(() => {
 
 onMounted(async () => {
     try {
+        const data = await getPublishedTask(slug, taskId);
         task.value = await getPublishedTask(slug, taskId);
-        starterCode.value = task.value.starter_code || "";
-        code.value = starterCode.value;
+        starterCode.value = task.value.starter_code ?? "";
+        code.value = starterCode.value ?? "";
+        document.title = data.title;
     } catch (e) {
         error.value = e.message;
     } finally {
