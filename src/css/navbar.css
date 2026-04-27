@@ -1,0 +1,52 @@
+/* ── Навбар ─────────────────────────────────────────────── */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+}
+
+.navbar-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-brand {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 4px;
+}
+
+.navbar-link {
+    padding: 6px 14px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition:
+        background 0.15s,
+        color 0.15s;
+}
+
+.navbar-link:hover {
+    background: var(--border);
+    color: var(--text);
+}
+
+.navbar-link.router-link-active {
+    background: var(--border);
+    color: var(--text);
+    font-weight: 500;
+}
