@@ -1,7 +1,9 @@
 import axios from "axios";
 
-export async function getPublishedTopics() {
-    const res = await axios.get(`/api/v1/topics/published`);
+export async function getPublishedTopics(isInterview = false) {
+    const res = await axios.get(`/api/v1/topics/published`, {
+        params: { is_interview: isInterview },
+    });
     return res.data;
 }
 

@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1>Темы</h1>
+        <h1>Подготовка к собеседованию</h1>
         <div v-if="loading" class="status">Загрузка...</div>
         <div v-else-if="error" class="status error">Ошибка: {{ error }}</div>
         <template v-else>
@@ -70,7 +70,7 @@ const progressPercent = computed(() =>
 
 onMounted(async () => {
     try {
-        topics.value = await getPublishedTopics(false);
+        topics.value = await getPublishedTopics(true);
     } catch (e) {
         error.value = e.message;
     } finally {
