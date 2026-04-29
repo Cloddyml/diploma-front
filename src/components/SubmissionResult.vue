@@ -24,9 +24,16 @@
         <span v-else-if="submission.status === 'internal_error'"
             >Внутренняя ошибка сервера</span
         >
+
         <pre v-if="submission.result && submission.status === 'wrong_answer'">
             {{ formatResult(submission.result) }}
         </pre>
+
+        <pre
+            v-if="submission.error && submission.status === 'runtime_error'"
+            class="error-text"
+            >{{ submission.error }}</pre
+        >
     </div>
 </template>
 
@@ -56,4 +63,22 @@ const statusClass = computed(() => {
             return "";
     }
 });
+
+function formatResult(result) {
+    if (!result) return "";
+    try {
+        const parsed = JSON.parse(result);
+        return parsed
+            .map((r) => {
+                const errorText =
+                    r.error === "wrong_answer"
+                        ? "неверный ответ"
+                        : r.error || "неизвестная ошибка";
+                return `Тест ${r.test}: ${errorText}`;
+            })
+            .join("\n");
+    } catch {
+        return result;
+    }
+}
 </script>
