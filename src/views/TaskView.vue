@@ -64,28 +64,27 @@ const error = ref(null);
 const submitting = ref(false);
 const submission = ref(null);
 
+let pollInterval = null;
+
 const renderedDescription = computed(() =>
     task.value?.description ? marked.parse(task.value.description) : "",
 );
 
-let pollInterval = null;
-
-onBeforeUnmount(() => {
-    if (pollInterval) clearInterval(pollInterval);
-});
-
 onMounted(async () => {
     try {
-        const data = await getPublishedTask(slug, taskId);
         task.value = await getPublishedTask(slug, taskId);
         starterCode.value = task.value.starter_code ?? "";
-        code.value = starterCode.value ?? "";
-        document.title = data.title;
+        code.value = starterCode.value;
+        document.title = task.value.title;
     } catch (e) {
         error.value = e.message;
     } finally {
         loading.value = false;
     }
+});
+
+onBeforeUnmount(() => {
+    if (pollInterval) clearInterval(pollInterval);
 });
 
 async function toggleCompletion() {
