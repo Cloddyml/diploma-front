@@ -1,7 +1,7 @@
-import axios from "axios";
+import { api } from "./client";
 
 export async function getTaskHint(taskId, userMessage) {
-    const res = await axios.post("/api/v1/ai/task-hint", {
+    const res = await api.post("/ai/task-hint", {
         task_id: taskId,
         user_message: userMessage,
     });
@@ -9,7 +9,7 @@ export async function getTaskHint(taskId, userMessage) {
 }
 
 export async function getTopicHint(topicId, userMessage) {
-    const res = await axios.post("/api/v1/ai/topic-hint", {
+    const res = await api.post("/ai/topic-hint", {
         topic_id: topicId,
         user_message: userMessage,
     });

@@ -64,7 +64,7 @@ const error = ref(null);
 const submitting = ref(false);
 const submission = ref(null);
 
-let pollInterval = null;
+let stopPolling = null;
 
 const renderedDescription = computed(() =>
     task.value?.description ? marked.parse(task.value.description) : "",
@@ -84,7 +84,7 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(() => {
-    if (pollInterval) clearInterval(pollInterval);
+    if (stopPolling) stopPolling();
 });
 
 async function toggleCompletion() {
@@ -102,10 +102,10 @@ async function submitSolution() {
     submission.value = { status: "pending" };
     try {
         const created = await submitCode(slug, taskId, code.value);
-        pollInterval = pollSubmission(created.submission_id, (result) => {
+        stopPolling = pollSubmission(created.submission_id, (result) => {
             submission.value = result;
             submitting.value = false;
-            pollInterval = null;
+            stopPolling = null;
         });
     } catch (e) {
         error.value = e.message;

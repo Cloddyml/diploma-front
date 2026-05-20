@@ -1,6 +1,6 @@
-import axios from "axios";
+import { api } from "./client";
 
 export async function getProgress(days = 30) {
-    const res = await axios.get("/api/v1/progress", { params: { days } });
+    const res = await api.get("/progress", { params: { days } });
     return res.data;
 }

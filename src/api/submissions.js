@@ -1,4 +1,4 @@
-import axios from "axios";
+import { api } from "./client";
 
 const TERMINAL_STATUSES = [
     "accepted",
@@ -9,29 +9,43 @@ const TERMINAL_STATUSES = [
     "internal_error",
 ];
 
+const INITIAL_DELAY_MS = 500;
+const MAX_DELAY_MS = 5000;
+const BACKOFF_FACTOR = 1.5;
+const MAX_ERRORS = 5;
+
 export async function submitCode(topicSlug, taskId, code) {
-    const res = await axios.post(
-        `/api/v1/topics/${topicSlug}/tasks/${taskId}/submit`,
+    const res = await api.post(
+        `/topics/${topicSlug}/tasks/${taskId}/submit`,
         { code },
     );
     return res.data;
 }
 
+/**
+ * Опрашивает статус submission с экспоненциальной задержкой.
+ * Возвращает функцию stop() для остановки опроса (например, в onBeforeUnmount).
+ */
 export function pollSubmission(submissionId, onResult, onError) {
+    let stopped = false;
+    let timeoutId = null;
     let errorCount = 0;
-    const MAX_ERRORS = 5;
+    let delay = INITIAL_DELAY_MS;
 
-    const interval = setInterval(async () => {
+    async function tick() {
+        if (stopped) return;
         try {
-            const res = await axios.get(`/api/v1/submissions/${submissionId}`);
-            if (TERMINAL_STATUSES.includes(res.data.status)) {
-                clearInterval(interval);
-                onResult(res.data);
+            const { data } = await api.get(`/submissions/${submissionId}`);
+            if (TERMINAL_STATUSES.includes(data.status)) {
+                stop();
+                onResult(data);
+                return;
             }
+            errorCount = 0;
         } catch (e) {
             errorCount++;
             if (errorCount >= MAX_ERRORS) {
-                clearInterval(interval);
+                stop();
                 if (onError) {
                     onError(e);
                 } else {
@@ -40,9 +54,21 @@ export function pollSubmission(submissionId, onResult, onError) {
                         error: "Не удалось получить результат проверки.",
                     });
                 }
+                return;
             }
         }
-    }, 1500);
+        delay = Math.min(Math.round(delay * BACKOFF_FACTOR), MAX_DELAY_MS);
+        timeoutId = setTimeout(tick, delay);
+    }
 
-    return interval;
+    function stop() {
+        stopped = true;
+        if (timeoutId !== null) {
+            clearTimeout(timeoutId);
+            timeoutId = null;
+        }
+    }
+
+    timeoutId = setTimeout(tick, delay);
+    return stop;
 }
